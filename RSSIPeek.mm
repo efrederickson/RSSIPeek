@@ -4,7 +4,6 @@
 extern BOOL hasProtean;
 
 static PRRSSIPeek *sharedInstance;
-static BOOL oldShowRSSI; // Protean
 
 @implementation PRRSSIPeek
 
@@ -19,41 +18,14 @@ static BOOL oldShowRSSI; // Protean
 
 - (void)showRSSI
 {
-    if (hasProtean)
-    {
-        oldShowRSSI = [[objc_getClass("Protean") getOrLoadSettings][@"showSignalRSSI"] boolValue];
-        NSMutableDictionary *prefs = [[objc_getClass("Protean") getOrLoadSettings] mutableCopy];
-        prefs[@"showSignalRSSI"] = @YES;
-        [prefs writeToFile:PROTEAN_PLIST_NAME atomically:YES];
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.efrederickson.protean/reloadSettings"), nil, nil, YES);
-    }
-    else
-    {
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.efrederickson.rssipeek/enableRSSI"), nil, nil, YES);
-    }
-    
-    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _setItem:3 enabled:NO];
-    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _updateSignalStrengthItem];
+    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.efrederickson.rssipeek/enableRSSI"), nil, nil, YES);
     
     _acceptEvent = NO;
 }
 
 - (void)hideRSSI
 {
-    if (hasProtean)
-    {
-        NSMutableDictionary *prefs = [[objc_getClass("Protean") getOrLoadSettings] mutableCopy];
-        prefs[@"showSignalRSSI"] = oldShowRSSI ? @YES : @NO;
-        [prefs writeToFile:PROTEAN_PLIST_NAME atomically:YES];
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.efrederickson.protean/reloadSettings"), nil, nil, YES);
-    }
-    else
-    { 
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.efrederickson.rssipeek/disableRSSI"), nil, nil, YES);
-    }
-    
-    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _setItem:3 enabled:NO];
-    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _updateSignalStrengthItem];
+    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.efrederickson.rssipeek/disableRSSI"), nil, nil, YES);
     
     _acceptEvent = YES;
 }

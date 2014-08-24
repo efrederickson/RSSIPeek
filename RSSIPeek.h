@@ -12,7 +12,7 @@
 @class _UILegibilityImageSet;
 
 @interface Protean
-+(NSDictionary*) getOrLoadSettings;
++(NSMutableDictionary*) getOrLoadSettings;
 @end
 
 @interface PRRSSIPeek : NSObject <LAListener>

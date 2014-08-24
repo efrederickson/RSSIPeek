@@ -1,14 +1,10 @@
 #import "RSSIPeek.h"
 
 BOOL showRSSI;
-BOOL hasProtean;
 
 %hook UIStatusBarSignalStrengthItemView
 - (_UILegibilityImageSet *)contentsImage
 {
-    if (hasProtean)
-        return %orig;
-    
     if (showRSSI)
     {
 		return [self imageWithText:[self _stringForRSSI]];
@@ -25,6 +21,11 @@ void enableRSSI(CFNotificationCenterRef center,
                     CFDictionaryRef userInfo)
 {
     showRSSI = YES;
+
+
+    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _setItem:3 enabled:NO];
+    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _updateSignalStrengthItem];
+    
 }
 
 void disableRSSI(CFNotificationCenterRef center,
@@ -34,6 +35,11 @@ void disableRSSI(CFNotificationCenterRef center,
                     CFDictionaryRef userInfo)
 {
     showRSSI = NO;
+
+
+    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _setItem:3 enabled:NO];
+    [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _updateSignalStrengthItem];
+    
 }
 
 %ctor
@@ -42,7 +48,5 @@ void disableRSSI(CFNotificationCenterRef center,
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, &enableRSSI, CFSTR("com.efrederickson.rssipeek/enableRSSI"), NULL, 0);
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, &disableRSSI, CFSTR("com.efrederickson.rssipeek/disableRSSI"), NULL, 0);
-
-    hasProtean = [[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/Protean.dylib"];
 
 }
