@@ -1,0 +1,9 @@
+Package: com.efrederickson.rssipeek
+Name: RSSIPeek
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Quickly view the signal RSSI!
+Maintainer: Elijah Frederickson
+Author: Elijah Frederickson
+Section: Tweaks
