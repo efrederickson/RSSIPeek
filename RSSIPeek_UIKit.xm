@@ -48,5 +48,4 @@ void disableRSSI(CFNotificationCenterRef center,
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, &enableRSSI, CFSTR("com.efrederickson.rssipeek/enableRSSI"), NULL, 0);
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, &disableRSSI, CFSTR("com.efrederickson.rssipeek/disableRSSI"), NULL, 0);
-
 }
