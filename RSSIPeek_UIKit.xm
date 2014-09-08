@@ -1,3 +1,4 @@
+#import <dlfcn.h>
 #import "RSSIPeek.h"
 
 BOOL showRSSI;
@@ -44,6 +45,10 @@ void disableRSSI(CFNotificationCenterRef center,
 
 %ctor
 {
+    // Fix compatibility with tweak "Bars"
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/bars.dylib"])
+        dlopen("/Library/MobileSubstrate/DynamicLibraries/bars.dylib", RTLD_NOW | RTLD_GLOBAL);
+
     %init;
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, &enableRSSI, CFSTR("com.efrederickson.rssipeek/enableRSSI"), NULL, 0);
