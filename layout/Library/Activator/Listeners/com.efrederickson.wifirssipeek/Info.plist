@@ -9,8 +9,8 @@
 		<string>lockscreen</string>
 	</array>
 	<key>description</key>
-	<string>Quickly view the signal RSSI</string>
+	<string>Quickly view the wifi RSSI</string>
 	<key>title</key>
-	<string>Signal RSSI Peek</string>
+	<string>Wifi RSSI Peek</string>
 </dict>
 </plist>

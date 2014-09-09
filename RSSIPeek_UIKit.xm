@@ -22,8 +22,6 @@ void enableRSSI(CFNotificationCenterRef center,
                     CFDictionaryRef userInfo)
 {
     showRSSI = YES;
-
-
     [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _setItem:3 enabled:NO];
     [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _updateSignalStrengthItem];
     
@@ -36,8 +34,6 @@ void disableRSSI(CFNotificationCenterRef center,
                     CFDictionaryRef userInfo)
 {
     showRSSI = NO;
-
-
     [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _setItem:3 enabled:NO];
     [((SBStatusBarStateAggregator*)[objc_getClass("SBStatusBarStateAggregator") sharedInstance]) _updateSignalStrengthItem];
     

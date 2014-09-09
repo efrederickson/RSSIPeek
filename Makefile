@@ -3,6 +3,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = RSSIPeek
 RSSIPeek_FILES = RSSIPeek.mm RSSIPeek_UIKit.xm
+RSSIPeek_PRIVATE_FRAMEWORKS = GraphicsServices
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 

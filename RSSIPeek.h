@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
 #import <libactivator/libactivator.h>
-#define PROTEAN_PLIST_NAME @"/var/mobile/Library/Preferences/com.efrederickson.protean.settings.plist"
 
 @interface SBStatusBarStateAggregator
 + (SBStatusBarStateAggregator*) sharedInstance;
@@ -17,6 +16,12 @@
 
 @interface PRRSSIPeek : NSObject <LAListener>
 @property BOOL acceptEvent;
++(instancetype) sharedInstance;
+@end
+
+@interface PRWifiRSSIPeek : NSObject <LAListener>
+@property BOOL acceptEvent;
++(instancetype) sharedInstance;
 @end
 
 @interface UIStatusBarItemView
@@ -34,4 +39,22 @@
 - (_UILegibilityImageSet *)contentsImage;
 - (BOOL)updateForNewData:(id)arg1 actions:(int)arg2;
 - (void)touchesEnded:(id)arg1 withEvent:(id)arg2;
+@end
+
+@interface UIStatusBarDataNetworkItemView : UIStatusBarItemView {
+    int _dataNetworkType;
+    BOOL _enableRSSI;
+    BOOL _showRSSI;
+    int _wifiStrengthBars;
+    int _wifiStrengthRaw;
+}
+
+- (id)_dataNetworkImage;
+- (id)_stringForRSSI;
+- (id)contentsImage;
+- (float)extraLeftPadding;
+- (float)maximumOverlap;
+- (void)touchesEnded:(id)arg1 withEvent:(id)arg2;
+- (BOOL)updateForNewData:(id)arg1 actions:(int)arg2;
+
 @end
